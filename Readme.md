@@ -4,6 +4,19 @@
 2. File Based Routing
 3. Server Side Rendering
 
+# Next js Use Cases
+
+1. Content heavy apps(Blogs,Shop)
+
+# No need to use Next js in such cases if
+
+1. User Needs To login
+2. Admin dashboard
+
+# Notes
+
+Next js returns pre-rendered pages which is good for SEO optimizations. Also it sends all the javsacript code too.This gives the React to do its jon at front-end too. Hyderate with react code once the pre-rendered page gets loaded.
+
 # Two Different Ways
 
 1. App Router(New and Partially Buggy)
@@ -117,3 +130,62 @@ public folder is a special folder in next js because whatever is stored in there
 This is the root component where different page components are rendered in.Next js use \_\_app component
 to hand your page content to it whenever you switch to display it
 05../\_\_app
+
+# Static Generation
+
+Pre-generate a page(with data prepared on server-side) during build time
+Pages are prepared ahead of time and can be cached by the server / CDN serving the app
+
+# Incrmental Static generation
+
+Re-generate it on every request, at most every X seconds
+Passing the second parameter as "revalidate" in getStaticprops.
+06/.../pages/index.js
+So we use this strategy as this enables us to use static-generation on page per-basis, without needing to rebuild the entire site.With ISR , you can retian the benefits of static while scaling to millions of pages.
+
+# notFound parameter in getStaticProps
+
+if set to true then page will return 404 error
+06/.../pages/index.js
+
+# redirect parameter in getStaticProps
+
+redirect to another page
+06/.../pages/index.js
+
+# context parameter in getStaticProps
+
+can be used to get params of the path
+06/.../pages/[pid].js
+
+# dynamic pages getStaticPaths
+
+For dynamic pages getStaticProps wont work alone as next js needs to know in advance the no of pages it will pre-render before. Therefore we will use getStaticPaths
+06/.../pages/[pid].js
+
+# fallback parameter in getStaticPaths
+
+with fallBack true we tell next js if pages are not listed in here then those pages will be generated just in time when the request reaches on server. This helps us to pre-generate highly visited pages and postponed generation of other less visited pages to the server so they are generated when required
+
+# getServerSideProps
+
+Sometimes you need to pre-render for every request or you need access to the request object(eg for cookies)
+The code will be run at server only and not at build time. It is executed for every request
+
+# getStaticProps vs getServerSideProps
+
+They both clash. You should either use getStaticProps or getServerSideProps
+
+# Parameters on which we should decide CSR,SSG,SSR,ISR
+
+1. Build Time(Is build time important on server or on client side)
+2. Dynamic Content(How often does the content gets updated)
+3. Search Engine Optimization(How much SEO is valuable for us)
+4. Render Time(Build time,Build to server time is important?,Server to client time,client should wait,server should wait??)
+5. Content Updation(How much content gets updated)
+
+# Client-side Data Fetching
+
+1. Data Changes with high frequency(eg stock data), pre-rendering,prefetching not work
+2. Highly user-specific data(eg: last orders in an online shop)
+3. Partial Data(eg - data thats only used on a part of a page)
