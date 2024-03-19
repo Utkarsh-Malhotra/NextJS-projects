@@ -189,3 +189,24 @@ They both clash. You should either use getStaticProps or getServerSideProps
 1. Data Changes with high frequency(eg stock data), pre-rendering,prefetching not work
 2. Highly user-specific data(eg: last orders in an online shop)
 3. Partial Data(eg - data thats only used on a part of a page)
+
+# Configuring head content
+
+07../src/pages/index.js
+07../src/pages/\_\_app.js
+You can set generic title and other metadat for all the pages which can be replaced by similar metadata if written or individual pages. This ensure if metadata is not defined in a page, generic metadata will be merged
+
+# \_document.js
+
+If we want to edit the default html document of next js that can be done in \_document.js file which needs to be added in pages folder.
+Eg: - 1. React Portals can be added outside the application component tree 2. Edit the whole html document
+07../src/pages/\_document.js
+
+# next/Image
+
+Next js is a production framework so next js provides this component to optimise images used in the project
+It reduces the size and quality enough which is not noticable
+Images are lazy loaded when required. Try changing the size of screen new image will get downloaded when required
+07/../src/components/events/event-item.js
+The width and height determines the image size that will be fetched here
+next/image documentation for other options to explore
